@@ -12,15 +12,21 @@ import { toast } from 'react-toastify';
 export default function SignIn() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [form, setForm] = useState({ phone_number: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const loginMutation = useMutation({
-    mutationFn: (credentials: { username: string; password: string }) =>
-      instance().post('/auth/signin', credentials),
-    onSuccess: () => {
-      toast.success(t('login_success'));
+    mutationFn: (credentials: { phone_number: string; password: string }) => {
+      const formData = new FormData();
+      formData.append('phone_number', credentials.phone_number);
+      formData.append('password', credentials.password);
+      return instance().post('/auth/signin', formData);
+    },
+    onSuccess: (res) => {
+      const token = res.data?.tokens.accessToken
+      toast.success(t('Successfully logged in'));
       router.push('/');
+      console.log(res.data);
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || t('Foydalanuvchi nomi yoki parol noto‘g‘ri'));
@@ -41,7 +47,7 @@ export default function SignIn() {
 
   return (
     <div className='bg-[#f2f2f2] min-h-screen'>
-      <button className='w-[120px] p-[10px] top-[20px] relative rounded-[8px] bg-[#fe5d37] text-[15px] leading-[100%] font-semibold text-white inline-block cursor-pointer left-[80%]' onClick={() => router.push('/sign-up')}>
+      <button className='w-[120px] p-[10px] top-[20px] relative rounded-[8px] bg-[#fe5d37] text-[15px] leading-[100%] font-semibold text-white inline-block cursor-pointer left-[80%]' onClick={() => router.push('/register')}>
         {t('Register')}
       </button>
       <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-4">
@@ -54,10 +60,10 @@ export default function SignIn() {
               {t('Kirish')}
             </h1>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700 mb-1">
                 {t('Sizning raqamingiz')}
               </label>
-              <input required type="text" id="username" name="username" value={form.username} onChange={handleChange} className="focus:outline-none mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-[#fe6d4b] focus:border-[#fe6d4b]" placeholder={t('Telefon raqam yoki email')} />
+              <input required type="text" id="phone_number" name="phone_number" value={form.phone_number} onChange={handleChange} className="focus:outline-none mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-[#fe6d4b] focus:border-[#fe6d4b]" placeholder={t('Telefon raqam yoki email')} />
             </div>
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
@@ -72,5 +78,5 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-  );
+  )
 }

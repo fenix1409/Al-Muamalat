@@ -18,7 +18,9 @@ const Header = () => {
         { id: 5, title: "Contact", path: '/contact' },
     ]
 
-    if (pathname === '/sign-in') return null
+    if (pathname === '/sign-in' || pathname === '/register') return null
+
+    const isSignedIn = typeof window !== "undefined" && !! localStorage.getItem('token')
 
     return (
         <header className='px-[130px] flex items-center justify-between'>
@@ -31,7 +33,15 @@ const Header = () => {
                 ))}
             </div>
             <div><LanguageSelector /></div>
-            <button className='w-[110px] px-[31px] py-[9px] rounded-3xl bg-[#fe5d37] text-[15px] leading-[100%] font-semibold text-white inline-block cursor-pointer' onClick={() => router.push('/sign-in')}>{t('Login')}</button>
+            {isSignedIn ? (
+                <button className='w-[110px] px-[31px] py-[9px] rounded-3xl bg-[#009688] text-[15px] leading-[100%] font-semibold text-white inline-block cursor-pointer' onClick={() => router.push('/profile')}>
+                    {t('Profile')}
+                </button>
+            ) : (
+                <button className='w-[110px] px-[31px] py-[9px] rounded-3xl bg-[#fe5d37] text-[15px] leading-[100%] font-semibold text-white inline-block cursor-pointer' onClick={() => router.push('/sign-in')}>
+                    {t('Login')}
+                </button>
+            )}
         </header>
     )
 }
