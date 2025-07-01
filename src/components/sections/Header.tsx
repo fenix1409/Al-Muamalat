@@ -23,7 +23,7 @@ const Header = () => {
     const isSignedIn = typeof window !== "undefined" && !! localStorage.getItem('token')
 
     return (
-        <header className='px-[130px] flex items-center justify-between'>
+        <header className='px-[130px] flex items-center justify-between fixed shadow-md bg-white z-50 w-full'>
             <Link href={'/'}>
                 <Logo />
             </Link>
