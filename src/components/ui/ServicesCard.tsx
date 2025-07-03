@@ -1,9 +1,12 @@
+"use client"
 import React from 'react'
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
+import { useTranslation } from 'react-i18next';
 
 const ServicesSection = () => {
+    const { t } = useTranslation()
     const services = [
         {
             title: "International Cooperation",
@@ -75,13 +78,13 @@ const ServicesSection = () => {
 
     return (
         <div className="container mx-auto">
-            <Slider {...settings} className='py-[10px] bg-[#F0F4F8]'>
+            <Slider {...settings} className='py-[10px]'>
                 {services.map((service, index) => (
                     <div key={index} className="px-4">
                         <div className="h-[140px] bg-white rounded-[10px] shadow-blue-950 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
                             <div className="p-6 flex-1 flex flex-col">
-                                <h2 className="text-xl font-semibold text-[#103741] mb-3">{service.title}</h2>
-                                <p className="text-gray-600">{service.description}</p>
+                                <h2 className="text-xl font-semibold text-[#103741] mb-3">{t(service.title)}</h2>
+                                <p className="text-gray-600">{t(service.description)}</p>
                             </div>
                         </div>
                     </div>
