@@ -39,9 +39,9 @@ const ExpertTeamCard = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="p-6">
+                        <div className="p-6 text-center">
                             <h3 className="text-xl font-bold text-gray-800 mb-1">{t(member.name)}</h3>
-                            <p className="text-green-600 font-medium mb-3">{t(member.position)}</p>
+                            <p className="font-medium mb-3">{t(member.position)}</p>
                             <p className="text-gray-600 text-sm leading-relaxed">{t(member.description)}</p>
                         </div>
                     </div>
